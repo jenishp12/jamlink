@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JamLink | SignUp Page</title>
+    <style>
+        body {
+            background: linear-gradient(90deg, #A3C1AD 0%, #B9D9EB 35%, #0071c5 100%);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .signup-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 400px;
+        }
+        .signup-box h1 {
+            color: #0071c5;
+        }
+        .text {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #888;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        #signup-button {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(90deg, #A3C1AD 0%, #B9D9EB 35%, #0071c5 100%);
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        #bar {
+            height: 100px;
+            background: linear-gradient(90deg, #A3C1AD 0%, #B9D9EB 35%, #0071c5 100%);
+            color: black;
+            font-family: "Poppins", Arial, sans-serif;
+            font-size: 40px;
+            font-weight: bold;
+            padding: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+        #login_button {
+            font-family: "Poppins", Arial, sans-serif;
+            font-size: 25px;
+            font-weight: bold;
+            background: whitesmoke;
+            color: black;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #login_button:hover {
+            background-color: #e0e0e0;
+            color: #0071c5;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="bar">
+      <div>JamLink</div>
+      <div id="login_button">Login</div>
+    </div>
+    <div class="signup-box">
+        <h1>Sign Up for JamLink</h1>
+        <div id="error-message" class="error"></div>
+        <input type="text" id="first-name" class="text" placeholder="First Name" required>
+        <input type="text" id="last-name" class="text" placeholder="Last Name" required>
+        <input type="email" id="email" class="text" placeholder="Email" required>
+        <input type="password" id="password" class="text" placeholder="Password" required>
+        <input type="password" id="confirm-password" class="text" placeholder="Confirm Password" required>
+        <button id="signup-button" onclick="handleSignUp()">Sign Up</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        async function handleSignUp() {
+            const firstName = document.getElementById('first-name').value.trim();
+            const lastName = document.getElementById('last-name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const errorMessage = document.getElementById('error-message');
+
+            errorMessage.textContent = '';
+
+            if (!firstName || !lastName || !email || !password || !confirmPassword) {
+                errorMessage.textContent = 'Please fill in all fields.';
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                errorMessage.textContent = 'Passwords do not match.';
+                return;
+            }
+
+            const username = `${firstName} ${lastName}`;
+
+            try {
+                const response = await axios.post('/api/signup', {
+                    username,
+                    email,
+                    password
+                });
+                alert('Sign-up successful!');
+                window.location.href = '/login';
+            } catch (error) {
+                errorMessage.textContent = error.response?.data?.message || 'Sign-up failed.';
+            }
+        }
+        document.getElementById('login_button').addEventListener('click', () => {
+            window.location.href = '/login';
+        });
+    </script>
+</body>
+</html>

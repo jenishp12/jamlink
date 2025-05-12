@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>JamLink | Profile</title>
+	<link href="https://fonts.googleapis.com/css2?family=Forum&display=swap" rel="stylesheet">
+	<style>
+		body {
+			margin: 0;
+			background: linear-gradient(90deg, #A3C1AD 0%, #B9D9EB 35%, #0071c5 100%);
+			font-family: "Poppins", forum;
+			color: black;
+		}
+
+		#bar {
+			height: 100px;
+			background: linear-gradient(90deg, #A3C1AD 0%, #B9D9EB 35%, #0071c5 100%);
+			font-size: 40px;
+			font-weight: bold;
+			padding: 4px 20px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		#logout_button {
+			font-size: 25px;
+			font-weight: bold;
+			background: whitesmoke;
+			color: black;
+			padding: 6px 16px;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+		.profile-container {
+			background: whitesmoke;
+			width: 900px;
+			margin: 40px auto;
+			padding: 30px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0,0,0,0.2);
+		}
+
+		.profile-header {
+			text-align: center;
+			font-size: 36px;
+			font-weight: bold;
+			margin-bottom: 20px;
+		}
+
+		.profile-info {
+			display: flex;
+			gap: 40px;
+			align-items: flex-start;
+		}
+
+		.profile-pic {
+			flex: 1;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;  /* Make image clickable */
+		}
+
+		.profile-pic img {
+			width: 150px;
+			height: 150px;
+			border-radius: 50%;
+			object-fit: cover;
+			background-color: #fff;
+			padding: 6px;
+			border: 3px solid #0071c5;
+			box-shadow: 0 0 8px rgba(0,0,0,0.2);
+		}
+
+		.profile-details {
+			flex: 3;
+		}
+
+		.detail-row {
+			margin-bottom: 10px;
+			font-size: 18px;
+		}
+
+		.label {
+			font-weight: bold;
+			margin-right: 5px;
+		}
+
+		.posts-section {
+			margin-top: 30px;
+		}
+
+		.post {
+			background: #f0f8ff;
+			padding: 15px;
+			margin-bottom: 15px;
+			border-radius: 8px;
+			box-shadow: 0 0 4px rgba(0,0,0,0.1);
+		}
+
+		.post h4 {
+			margin: 0 0 10px;
+		}
+
+		/* Modal Styling */
+		.modal {
+			display: none;
+			position: fixed;
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgb(0,0,0);
+			background-color: rgba(0,0,0,0.4);
+			padding-top: 60px;
+		}
+
+		.modal-content {
+			background-color: #fefefe;
+			margin: 5% auto;
+			padding: 20px;
+			border: 1px solid #888;
+			width: 50%;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+			border-radius: 8px;
+		}
+
+		.tab {
+			display: none;
+		}
+
+		.tab-links {
+			display: flex;
+			justify-content: space-around;
+		}
+
+		.tab-button {
+			padding: 10px;
+			cursor: pointer;
+			background-color: #f1f1f1;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			margin: 0 5px;
+		}
+
+		.active-tab {
+			background-color: #0071c5;
+			color: white;
+		}
+
+		.input-section {
+			margin: 20px 0;
+		}
+
+		.input-section input {
+			padding: 10px;
+			width: 100%;
+			margin-top: 10px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+		}
+
+	</style>
+</head>
+<body>
+
+	<!-- logout button -->
+	<div id="bar">
+		<div>JamLink</div>
+		<div id="logout_button">Log Out</div>
+	</div>
+
+	<div class="profile-container">
+		<div class="profile-header">John Doe</div>
+
+		<div class="profile-info">
+			<div class="profile-pic" onclick="openModal()">
+			<!-- Stock Image as a placeholder -->
+			<img id="profile-img" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Profile Picture">
+			</div>
+
+			<div class="profile-details">
+			<div class="detail-row"><span class="label">Email:</span> johndoe@email.com</div>
+			<div class="detail-row"><span class="label">Instrument:</span> Guitar</div>
+			<div class="detail-row"><span class="label">Genre:</span> Jazz, Blues</div>
+			<div class="detail-row"><span class="label">Location:</span> Nashville, TN</div>
+			<div class="detail-row"><span class="label">Bio:</span> Passionate guitarist collaborating with musicians worldwide.</div>
+		</div>
+	</div>
+
+	<div class="posts-section">
+		<h3>User Posts</h3>
+		<div class="post">
+			<h4>🎸 Looking to collab on a jazz fusion track!</h4>
+			<p>I'm working on a new piece and looking for a drummer and bassist.</p>
+		</div>
+		<div class="post">
+			<h4>🎶 Just released a new solo!</h4>
+			<p>Check out my latest guitar solo on SoundCloud. Feedback appreciated!</p>
+		</div>
+		</div>
+	</div>
+
+	<!-- Modal for changing profile image -->
+	<div id="imageModal" class="modal">
+		<div class="modal-content">
+			<span onclick="closeModal()" style="float: right; font-size: 30px; cursor: pointer;">&times;</span>
+			<h2>Change Profile Picture</h2>
+
+			<div class="tab-links">
+			<div class="tab-button active-tab" onclick="openTab(event, 'file')">Upload Image</div>
+			<div class="tab-button" onclick="openTab(event, 'url')">Paste URL</div>
+		</div>
+
+		<!-- Tab content -->
+		<div id="file" class="tab active-tab">
+			<div class="input-section">
+				<input type="file" id="file-input" accept="image/*">
+				<button onclick="uploadFile()">Upload</button>
+			</div>
+		</div>
+
+		<div id="url" class="tab">
+			<div class="input-section">
+				<input type="url" id="url-input" placeholder="Paste image URL here">
+				<button onclick="updateImageUrl()">Set Image</button>
+			</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function openModal() {
+			document.getElementById('imageModal').style.display = 'block';
+		}
+
+		function closeModal() {
+			document.getElementById('imageModal').style.display = 'none';
+		}
+
+		function openTab(event, tabName) {
+			var i, tabcontent, tablinks;
+			tabcontent = document.getElementsByClassName('tab');
+
+			for (i = 0; i < tabcontent.length; i++) {
+				tabcontent[i].style.display = 'none';
+			}
+
+			tablinks = document.getElementsByClassName('tab-button');
+			for (i = 0; i < tablinks.length; i++) {
+				tablinks[i].className = tablinks[i].className.replace(' active-tab', '');
+			}
+
+			document.getElementById(tabName).style.display = 'block';
+			event.currentTarget.className += ' active-tab';
+		}
+
+		function uploadFile() {
+			const fileInput = document.getElementById('file-input');
+			const file = fileInput.files[0];
+
+			if (file) {
+				const reader = new FileReader();
+				reader.onload = function(e) {
+					document.getElementById('profile-img').src = e.target.result;
+				};
+				reader.readAsDataURL(file);
+				closeModal();
+			}
+		}
+
+		function updateImageUrl() {
+			const urlInput = document.getElementById('url-input').value;
+			if (urlInput) {
+				document.getElementById('profile-img').src = urlInput;
+				closeModal();
+			} else {
+				alert('Please enter a valid URL');
+			}
+		}
+    document.getElementById('logout_button').addEventListener('click', function () {
+      // clear session tokens here
+
+      window.location.href = '/login';
+    });
+	</script>
+
+</body>
+</html>
+

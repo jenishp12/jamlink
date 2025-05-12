@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JamLink | Login Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Forum&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(90deg, #A3C1AD 0%,#B9D9EB 35%, #0071c5 100%);
+        }
+        #bar {
+            height: 100px;
+            background: linear-gradient(90deg, #A3C1AD 0%,#B9D9EB 35%, #0071c5 100%);
+            color: black;
+            font-family: "Poppins", forum;
+            font-size: 40px;
+            font-weight: bold;
+            padding: 4px;
+        }
+        #signup_button {
+            font-family: "Poppins", forum;
+            font-size: 25px;
+            font-weight: bold;
+            background: whitesmoke;
+            color: black;
+            width: 80px;
+            text-align: center;
+            padding: 4px;
+            border-radius: 4px;
+            float: right;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        #signup_button:hover {
+            background-color: #e0e0e0;
+            color: #0071c5;
+        }
+        #bar2 {
+            background: whitesmoke;
+            width: 800px;
+            margin: auto;
+            margin-top: 50px;
+            padding: 10px;
+            padding-top: 20px;
+            text-align: center;
+            color: black;
+            font-family: "Poppins", forum;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        .text-input {
+            height: 40px;
+            width: 300px;
+            border-radius: 4px;
+            border: solid 1px #888;
+            padding: 4px;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        #button {
+            width: 300px;
+            height: 40px;
+            border-radius: 4px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #A3C1AD 0%,#B9D9EB 35%, #0071c5 100%);
+            cursor: pointer;
+        }
+        .error {
+            color: red;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        #bar2 {
+            background: whitesmoke;
+            width: 800px;
+            margin: auto;
+            margin-top: 50px;
+            padding: 10px;
+            padding-top: 20px;
+            text-align: center;
+            color: black;
+            font-family: "Poppins", forum;
+            font-size: 40px;
+            font-weight: bold;
+            border-radius: 20px; /* Added for rounded corners */
+        }
+
+    </style>
+</head>
+<body>
+    <div id="bar">
+        <div>JamLink</div>
+        <div id="signup_button" onclick="redirectToSignup()">Signup</div>
+    </div>
+
+    <div id="bar2">
+        Log in to JamLink<br><br>
+        <input type="email" id="email" class="text-input" placeholder="Email"><br>
+        <input type="password" id="password" class="text-input" placeholder="Password"><br>
+        <input type="submit" id="button" value="Log in" onclick="handleLogin()">
+        <div id="error-message" class="error"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        async function handleLogin() {
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('error-message');
+            errorMsg.textContent = '';
+    
+            if (!email || !password) {
+                errorMsg.textContent = 'Please enter both email and password.';
+                return;
+            }
+    
+            try {
+                const response = await axios.post('/api/login', {
+                    email,
+                    password
+                });
+    
+                if (response.status === 201) {
+                    window.location.href = '/main'; // Redirect to homepage or dashboard
+                }
+            } catch (error) {
+                console.error("Login error: ", error);  // Log the error details for debugging
+                errorMsg.textContent = error.response?.data?.message || 'Login failed.';
+            }
+        }
+        function redirectToSignup() {
+          window.location.href = '/signup';
+        }
+    </script>
+    
+</body>
+</html>

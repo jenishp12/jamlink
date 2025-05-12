@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Forum&display=swap" rel="stylesheet">
+    <title>JamLink - Messaging</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Forum', cursive;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%); /* Soft blue-purple gradient for music vibe */
+        }
+
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 20px auto;
+            gap: 20px;
+        }
+
+        .messaging-sidebar {
+            width: 30%;
+            background: #ffffff; /* White for clean contrast */
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .messaging-sidebar h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #2c3e50; /* Dark blue-gray for headings */
+        }
+
+        .followed-users {
+            list-style: none;
+        }
+
+        .followed-user {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .followed-user:hover {
+            background: #dfe9f5; /* Light blue hover effect */
+        }
+
+        .followed-user img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .followed-user span {
+            font-size: 18px;
+            color: #34495e; /* Slightly lighter dark blue for text */
+        }
+
+        .messaging-main {
+            width: 70%;
+            background: #f8fafc; /* Off-white for main chat area */
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            display: none;
+            flex-direction: column;
+        }
+
+        .messaging-main.active {
+            display: flex;
+        }
+
+        .messaging-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .messaging-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .messaging-header h3 {
+            font-size: 20px;
+            color: #2c3e50; /* Match sidebar heading color */
+        }
+
+        .message-area {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #b0c4de; /* Light steel blue border */
+            border-radius: 4px;
+            max-height: 400px;
+            background: #ffffff; /* White for message area clarity */
+        }
+
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 70%;
+        }
+
+        .message.sent {
+            background: #6b7280; /* Cool gray for sent messages */
+            color: white;
+            margin-left: auto;
+        }
+
+        .message.received {
+            background: #a3bffa; /* Light indigo for received messages */
+            color: #1a202c; /* Dark gray for text readability */
+            margin-right: auto;
+        }
+
+        .message-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .message-input textarea {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #b0c4de; /* Match message area border */
+            border-radius: 4px;
+            resize: none;
+            font-size: 16px;
+            background: #ffffff; /* White for input */
+        }
+
+        .message-input button {
+            padding: 10px 20px;
+            background: #4c51bf; /* Vibrant indigo for buttons */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .message-input button:hover {
+            background: #434190; /* Darker indigo on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="messaging-sidebar">
+            <h2>Messages</h2>
+            <ul class="followed-users" id="followedUsers">
+                <!-- Followed users will be populated by JavaScript -->
+            </ul>
+        </div>
+        <div class="messaging-main" id="messagingMain">
+            <div class="messaging-header" id="messagingHeader">
+                <img src="./images copy/profile_icon.png" alt="User">
+                <h3 id="selectedUser">Select a user to chat</h3>
+            </div>
+            <div class="message-area" id="messageArea">
+                <!-- Messages will be populated by JavaScript -->
+            </div>
+            <div class="message-input">
+                <textarea rows="2" placeholder="Type a message..." id="messageInput"></textarea>
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Mock data for followed users
+        const followedUsers = [
+            { id: 1, name: "User 1", img: "./images copy/profile_icon.png" },
+            { id: 2, name: "User 2", img: "./images copy/profile_icon.png" },
+            { id: 3, name: "User 3", img: "./images copy/drummer.png" },
+            { id: 4, name: "User 4", img: "./images copy/profile_icon.png" }
+        ];
+
+        // Mock message history
+        const messageHistory = {};
+
+        // Populate followed users
+        const followedUsersList = document.getElementById('followedUsers');
+        followedUsers.forEach(user => {
+            const li = document.createElement('li');
+            li.className = 'followed-user';
+            li.dataset.userId = user.id;
+            li.innerHTML = `
+                <img src="${user.img}" alt="${user.name}">
+                <span>${user.name}</span>
+            `;
+            li.addEventListener('click', () => selectUser(user));
+            followedUsersList.appendChild(li);
+        });
+
+        // Select a user to chat with
+        function selectUser(user) {
+            const messagingMain = document.getElementById('messagingMain');
+            const messagingHeader = document.getElementById('messagingHeader');
+            const messageArea = document.getElementById('messageArea');
+            const selectedUser = document.getElementById('selectedUser');
+
+            messagingMain.classList.add('active');
+            selectedUser.textContent = user.name;
+            messagingHeader.querySelector('img').src = user.img;
+
+            // Clear previous messages
+            messageArea.innerHTML = '';
+
+            // Load message history if exists
+            if (messageHistory[user.id]) {
+                messageHistory[user.id].forEach(msg => {
+                    const div = document.createElement('div');
+                    div.className = `message ${msg.type}`;
+                    div.textContent = msg.text;
+                    messageArea.appendChild(div);
+                });
+            }
+
+            // Store current user ID
+            messagingMain.dataset.currentUserId = user.id;
+
+            // Scroll to bottom
+            messageArea.scrollTop = messageArea.scrollHeight;
+        }
+
+        // Send a message
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const messageArea = document.getElementById('messageArea');
+            const messagingMain = document.getElementById('messagingMain');
+            const userId = messagingMain.dataset.currentUserId;
+
+            if (!userId || !messageInput.value.trim()) return;
+
+            const messageText = messageInput.value.trim();
+
+            // Add message to UI
+            const div = document.createElement('div');
+            div.className = 'message sent';
+            div.textContent = messageText;
+            messageArea.appendChild(div);
+
+            // Store in message history
+            if (!messageHistory[userId]) {
+                messageHistory[userId] = [];
+            }
+            messageHistory[userId].push({ type: 'sent', text: messageText });
+
+            // Clear input
+            messageInput.value = '';
+
+            // Scroll to bottom
+            messageArea.scrollTop = messageArea.scrollHeight;
+
+            // Simulate a reply (for demo purposes)
+            setTimeout(() => {
+                const reply = document.createElement('div');
+                reply.className = 'message received';
+                reply.textContent = `Reply from User ${userId}: Thanks for your message!`;
+                messageArea.appendChild(reply);
+                messageHistory[userId].push({ type: 'received', text: reply.textContent });
+                messageArea.scrollTop = messageArea.scrollHeight;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

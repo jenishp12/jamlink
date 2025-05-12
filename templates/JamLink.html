@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Forum&display=swap" rel="stylesheet">
+    <title>JamLink</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='JamLink.css') }}"> 
+    <!-- <script src="{{ url_for('static', filename='JamLink.js') }}"></script> -->
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="#" class="logo"><img src="{{url_for('static', filename='images copy/music_icon.png')}}" style="width: 100px; height: 100px;"> <span>JamLink</span></a>          
+            <div class="search-box">
+                <img src="{{url_for('static', filename='images copy/search-interface-symbol.png')}}">
+                <input type="text" id="searchInput" placeholder="Search posts or users">
+            </div>
+        </div>
+        <div class="navbar-center">
+            <button id="navbar-toggle"></button>
+            <ul>
+                <li><a href="#" class="active-link"><img src="{{url_for('static', filename='images copy/home_icon.png')}}" style="width: 50px; height: 50px;"> <span>Home</span></a></li>
+                <li><a href="#"><img src="{{url_for('static', filename='images copy/network_icon.png')}}" style="width: 50px; height: 50px;"> <span>My Network</span></a></li>
+                <li><a href="#"><img src="{{url_for('static', filename='images copy/location_icon.png')}}" style="width: 50px; height: 50px;"> <span>Location</span></a></li>
+                
+                <li>
+                    <a href="{{url_for('messaging')}}">
+                        <img src="{{url_for('static', filename='images copy/message_icon.png')}}" style="width: 50px; height: 50px;"> <span>Messaging</span>
+                    </a>
+                </li>
+                
+                <li><a href="#"><img src="{{url_for('static', filename='images copy/notification_icon.png')}}" style="width: 50px; height: 50px;"> <span>Notifications</span></a></li>
+            </ul>
+        </div>
+        <div class="navbar-right">
+            <div class="online">
+                <a href="{{url_for('profile')}}">
+                    <img src="{{url_for('static', filename='images copy/profile_icon.png')}}" style="width: 60px; height: 60px;" class="nav-profile-img">
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="left-sidebar">
+            <div class="sidebar-profile-box">
+                <img src="https://cdn.pixabay.com/photo/2016/08/01/07/25/piano-1560580_1280.jpg" width="100%">
+                <div class="sidebar-profile-info">
+                    <img src="{{url_for('static', filename='images copy/profile_icon.png')}}">
+                    <h1>User's Name</h1>
+                    <h3>Music Interest</h3>
+                    <ul>
+                        <li>Your profile views<span>429</span></li>
+                        <li>Your post views<span>4930</span></li>
+                        <li>Your connections<span>375</span></li>
+                    </ul>
+                </div>
+                <div class="sidebar-profile-link">
+                    <a href="#">My items</a>
+                    <a href="#">Try Premium</a>
+                </div>
+            </div>
+        </div>
+        <div class="profile-menu-wrap" id="profileMenu">
+            <div class="profile-menu">
+                <div class="user-info">
+                    <img src="{{url_for('static', filename='images copy/profile_icon.png')}}">
+                    <div>
+                        <h3>Rayan Walton</h3>
+                        <a href="#">See your profile</a>
+                    </div>
+                </div>
+                <hr>
+                <a href="#" class="profile-menu-link">
+                    <p>Give Feedback</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="profile-menu-link">
+                    <p>Settings & Privacy</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="profile-menu-link">
+                    <p>Help & Support</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="profile-menu-link">
+                    <p>Display & Accessibility</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="profile-menu-link">
+                    <p>Logout</p>
+                    <span>></span>
+                </a>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="create-post">
+                <div class="create-post-input">
+                    <img src="{{url_for('static', filename='images copy/icons8-write-50.png')}}" style="width: 30px;height: 30px;">
+                    <textarea rows="2" placeholder="Write a Post"></textarea>
+                </div>
+                <div class="create-post-links">
+                    <li><img src="{{url_for('static', filename='images copy/picture.png')}}">Photo</li>
+                    <li><img src="{{url_for('static', filename='images copy/play.png')}}">Video</li>
+                    <li>
+                        <img src="{{ url_for('static', filename='images copy/event icon.png') }}" style="width: 20px; height: 20px; vertical-align: middle;">
+                        Event
+                      </li>
+                    <li>Post</li>
+                </div>
+            </div>
+            <div class="sort-by">
+                <hr>
+                <p>Sort by: <span>top</span></p>
+            </div>
+            <div class="post" data-post-id="1">
+                <div class="post-author">
+                    <img src="{{url_for('static', filename='images copy/profile_icon.png')}}" style="width: 50px;height: 50px;">
+                    <div>
+                        <h1>User 1</h1>
+                        <small>Producer and Recruiter | Guitar</small>
+                        <small>2 hours ago</small>
+                    </div>
+                </div>
+                <p>Looking for a guitarist to jam with this weekend! #music #collaboration</p>
+                <!--<img src="#" width="100%">-->
+                <div class="post-stats">
+                    <div>
+                        <!--<img src="#">-->
+                        <!--<img src="#">-->
+                        <!--<img src="#">-->
+                        <span class="linked-users">UserXYZ and 75 others</span>
+                    </div>
+                    <div>
+                        <span class="like-count">22 likes</span> · <span>22 comments · 40 shares</span>
+                    </div>
+                </div>
+                <div class="post-activity">
+                    <div>
+                        <!--<img src="#" class="post-activity-user-icon">-->
+                        <!--<img src="#" class="post-activity-arrow-icon">-->
+                    </div>
+                    <div class="post-activity-link like-button">
+                        <img src="{{url_for('static', filename='images copy/icons8-facebook-like-50.png')}}" style="width: 20px; height: 20px;">
+                        <span>Like</span>
+                    </div>
+                    <div class="post-activity-link comment-button">
+                        <img src="{{url_for('static', filename='images copy/icons8-comment-50.png')}}" style="width: 20px; height: 20px;">
+                        <span>Comment</span>
+                    </div>
+                    <div class="post-activity-link share-button">
+                        <img src="{{url_for('static', filename='images copy/icons8-share-30.png')}}" style="width: 20px;height: 20px;">
+                        <span>Share</span>
+                    </div>
+                    <div class="post-activity-link">
+                        <img src="{{url_for('static', filename='images copy/icons8-send-30.png')}}" style="width: 20px;height: 20px;">
+                        <span>Send</span>
+                    </div>
+                    <div class="comment-section" style="display: none;"> <!-- CHANGED: Added comment-section div -->
+                        <textarea class="comment-input" rows="2" placeholder="Write a comment..."></textarea>
+                        <button class="submit-comment">Submit</button>
+                        <div class="comments-list"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="post" data-post-id="2">
+                <div class="post-author">
+                    <img src="{{url_for('static', filename='images copy/profile_icon.png')}}" style="width: 50px;height: 50px;">
+                    <div>
+                        <h1>User 2</h1>
+                        <small>Bass Guitarist | XYZ Band member</small>
+                        <small>2 hours ago</small>
+                    </div>
+                </div>
+                <p>Just dropped a new bass track, check it out! #bassguitar</p>
+                <img src="{{url_for('static', filename='images copy/guitar-playing.png')}}">
+                <div class="post-stats">
+                    <div>
+                        <!--<img src="#">-->
+                        <!--<img src="#">-->
+                        <!--<img src="#">-->
+                        <span class="linked-users">User123 and 75 others</span>
+                    </div>
+                    <div>
+                        <span class="like-count">10 likes</span> · <span>22 comments · 40 shares</span>
+                    </div>
+                </div>
+                <div class="post-activity">
+                    <div>
+                        <!--<img src="#" class="post-activity-user-icon">-->
+                        <!--<img src="#" class="post-activity-arrow-icon">-->
+                    </div>
+                    <div class="post-activity-link like-button">
+                        <img src="{{url_for('static', filename='images copy/icons8-facebook-like-50.png')}}" style="width: 20px;height: 20px;">
+                        <span>Like</span>
+                    </div>
+                    <div class="post-activity-link comment-button">
+                        <img src="{{url_for('static', filename='images copy/icons8-comment-50.png')}}" style="width: 20px;height: 20px;">
+                        <span>Comment</span>
+                    </div>
+                    <div class="post-activity-link share-button">
+                        <img src="{{url_for('static', filename='images copy/icons8-share-30.png')}}" style="width: 20px;height: 20px;">
+                        <span>Share</span>
+                    </div>
+                    <div class="post-activity-link">
+                        <img src="{{url_for('static', filename='images copy/icons8-send-30.png')}}" style="width: 20px;height:20px;">
+                        <span>Send</span>
+                    </div>
+                    <div class="comment-section" style="display: none;"> <!-- CHANGED: Added comment-section div -->
+                        <textarea class="comment-input" rows="2" placeholder="Write a comment..."></textarea>
+                        <button class="submit-comment">Submit</button>
+                        <div class="comments-list"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="post" data-post-id="3">
+                <div class="post-author">
+                    <img src="{{url_for('static', filename='images copy/drummer.png')}}" style="width: 50px;height: 50px;">
+                    <div>
+                        <h1>User 3</h1>
+                        <small>Drummer, Singer | Jazz enthusiast</small>
+                        <small>2 hours ago</small>
+                    </div>
+                </div>
+                <p>Practicing some jazz grooves tonight, anyone wanna join? #drums #jazz</p>
+                <img src="{{url_for('static', filename='images copy/drummer copy.png')}}" style="width: 70px; height: 70px;">
+                <div class="post-stats">
+                    <div>
+                        <!--<img src="#">-->
+                        <!--<img src="#">-->
+                        <!--<img src="#">-->
+                        <span class="linked-users">User2 and 75 others</span>
+                    </div>
+                    <div>
+                        <span class="like-count">30 likes</span> · <span>22 comments · 40 shares</span>
+                    </div>
+                </div>
+                <div class="post-activity">
+                    <div>
+                        <!--<img src="#" class="post-activity-user-icon">-->
+                        <!--<img src="#" class="post-activity-arrow-icon">-->
+                    </div>
+                    <div class="post-activity-link like-button">
+                        <img src="{{url_for('static', filename='images copy/icons8-facebook-like-50.png')}}" style="width: 20px;height: 20px;">
+                        <span>Like</span>
+                    </div>
+                    <div class="post-activity-link comment-button">
+                        <img src="{{url_for('static', filename='images copy/icons8-comment-50.png')}}" style="width: 20px;height: 20px;">
+                        <span>Comment</span>
+                    </div>
+                    <div class="post-activity-link share-button">
+                        <img src="{{url_for('static', filename='images copy/icons8-share-30.png')}}" style="width: 20px;height: 20px;">
+                        <span>Share</span>
+                    </div>
+                    <div class="post-activity-link">
+                        <img src="{{url_for('static', filename='images copy/icons8-send-30.png')}}" style="width: 20px;height: 20px;">
+                        <span>Send</span>
+                    </div>
+                    <div class="comment-section" style="display: none;"> <!-- CHANGED: Added comment-section div -->
+                        <textarea class="comment-input" rows="2" placeholder="Write a comment..."></textarea>
+                        <button class="submit-comment">Submit</button>
+                        <div class="comments-list"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="post" data-post-id="4">
+                <div class="post-author">
+                    <img src="{{url_for('static', filename='images copy/profile_icon.png')}}" style="width: 50px;height: 50px;">
+                    <div>
+                        <h1>User 4</h1>
+                        <small>Recruiter for Sony Music | Angel investor</small>
+                        <small>2 hours ago</small>
+                    </div>
+                </div>
+                <p>Hiring new talent for Sony Music, DM me your demos! #musicindustry</p>
+                <!--<img src="#" width="100%">-->
+                <div class="post-stats">
+                    <div>
+                        <!--<img src="#">-->
+                        <!--<img src="#">-->
+                        <!--<img src="#">-->
+                        <span class="linked-users">User1 and 75 others</span>
+                    </div>
+                    <div>
+                        <span class="like-count">15 likes</span> · <span>22 comments · 40 shares</span>
+                    </div>
+                </div>
+                <div class="post-activity">
+                    <div>
+                        <!--<img src="#" class="post-activity-user-icon">-->
+                        <!--<img src="#" class="post-activity-arrow-icon">-->
+                    </div>
+                    <div class="post-activity-link like-button">
+                        <img src="{{url_for('static', filename='images copy/icons8-facebook-like-50.png')}}" style="width: 20px;height: 20px;">
+                        <span>Like</span>
+                    </div>
+                    <div class="post-activity-link comment-button">
+                        <img src="{{url_for('static', filename='images copy/icons8-comment-50.png')}}" style="width: 20px;height: 20px;">
+                        <span>Comment</span>
+                    </div>
+                    <div class="post-activity-link share-button">
+                        <img src="{{url_for('static', filename='images copy/icons8-share-30.png')}}" style="width: 20px;height: 20px;">
+                        <span>Share</span>
+                    </div>
+                    <div class="post-activity-link">
+                        <img src="{{url_for('static', filename='images copy/icons8-send-30.png')}}" style="width: 20px;height: 20px;">
+                        <span>Send</span>
+                    </div>
+                    <div class="comment-section" style="display: none;"> <!-- CHANGED: Added comment-section div -->
+                        <textarea class="comment-input" rows="2" placeholder="Write a comment..."></textarea>
+                        <button class="submit-comment">Submit</button>
+                        <div class="comments-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right-sidebar">
+            <div class="sidebar-useful-links">
+                <a href="#">About</a>
+                <a href="#">Accessibility</a>
+                <a href="#">Help Center</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Advertising</a>
+                <a href="#">Get the App</a>
+                <a href="#">More</a>
+                <div class="copyright-msg">
+                    <p>JamLink © 2025. All rights reserved</p>
+                </div>
+            </div>
+        </div>
+        <div class="share-popup" style="display: none;"> <!-- CHANGED: Added share popup -->
+            <div class="share-content">
+                <p>Share this post</p>
+                <input type="text" class="share-link" readonly>
+                <button class="copy-link">Copy Link</button>
+                <button class="close-popup">Close</button>
+            </div>
+        </div>
+    </div>
+    <script src="{{url_for('static', filename='JamLink.js')}}"></script>
+</body>
+</html>
